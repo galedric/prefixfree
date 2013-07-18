@@ -2,6 +2,9 @@
  * StyleFix 1.0.3 & PrefixFree 1.0.7
  * @author Lea Verou
  * MIT license
+ *
+ * Modified by Bastien Clément
+ * Using opt-in instead of opt-out
  */
 
 (function(){
@@ -13,8 +16,8 @@ if(!window.addEventListener) {
 var self = window.StyleFix = {
 	link: function(link) {
 		try {
-			// Ignore stylesheets with data-noprefix attribute as well as alternate stylesheets
-			if(link.rel !== 'stylesheet' || link.hasAttribute('data-noprefix')) {
+			// Ignore stylesheets without data-prefix attribute as well as alternate stylesheets
+			if(link.rel !== 'stylesheet' || !link.hasAttribute('data-prefix')) {
 				return;
 			}
 		}
@@ -102,7 +105,7 @@ var self = window.StyleFix = {
 	},
 
 	styleElement: function(style) {
-		if (style.hasAttribute('data-noprefix')) {
+		if (!style.hasAttribute('data-prefix')) {
 			return;
 		}
 		var disabled = style.disabled;
